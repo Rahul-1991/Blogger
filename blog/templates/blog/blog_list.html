@@ -1,17 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h2> Blogs List </h2>
-    <ul>
-        {% for blog in blog_list %}
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Blogs List</h2>
+<ul>
+    {% for blog in blog_list %}
+        <div class="container element">
             <li>
-                {{ blog.content }}
+                <div class="container">
+                    <a href="{% url 'detail-blog' pk=blog.pk %}">{{ blog.content }}</a>
+                    <button type="button" class="btn btn-default upvote" onclick={{ blog.post_upvote }}>
+                      <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-default downvote" onclick={{ blog.post_downvote }}>
+                      <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="container">
+                    {{ blog.get_time_difference }}
+                </div>
             </li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+        </div>
+    {% endfor %}
+</ul>
+{% endblock %}

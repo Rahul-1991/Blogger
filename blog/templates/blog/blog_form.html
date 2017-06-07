@@ -1,21 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Blog create/update</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
     {% if not form.instance.pk %}
-        {% csrf_token %}
+        <h1>Create Blog</h1>
     {% else %}
         <h1>Update Blog</h1>
     {% endif %}
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" class="btn btn-primary" value="Submit">
-    </form>
-
-</body>
-</html>
+    <div class="container">
+        <form method="post">
+            <div class="container">
+                {% csrf_token %}
+                {{ form.as_p }}
+            </div>
+            <div class="container">
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </div>
+        </form>
+    </div>
+{% endblock %}

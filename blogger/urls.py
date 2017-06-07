@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from blog.v1.views import BlogListView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^blog/', include('blog.v1.urls'))
+    url(r'^blog/', include('blog.v1.urls')),
+    url(r'^$', BlogListView.as_view(), name='dashboard')
 ]

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Social Post</title>
+    <!-- Latest compiled and minified CSS -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- Google styled fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <!--CSS files-->
+    <link rel="stylesheet" href="{% static 'css/master.css'%}">
+
+    <!--Javascript files-->
+    <script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+
+
+  </head>
+
+  <body>
+    <nav class="navbar  mynav" role="navigation" id="navbar">
+        <div class="container">
+            <a class="navbar-brand mynav" href="{% url 'list-blogs' %}">Social Post</a>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'create-blog' %}" class="btn btn-simple">Create Post</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="#" class="btn btn-simple">Log out</a></li>
+                {% else %}
+                    <li><a href="#" class="btn btn-simple">Log in</a></li>
+                    <li><a href="#" class="btn btn-simple">Sign up</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="container mycontent">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+  </body>
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/blog.js' %}"></script>
+
+</html>

@@ -1,6 +1,7 @@
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 from .models import Blog
 from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect
 
 
 class BlogListView(ListView):
@@ -20,6 +21,7 @@ class BlogCreateView(CreateView):
 
     model = Blog
     fields = ('content',)
+    template_name = 'blog/blog_form.html'
 
 
 class BlogUpdateView(UpdateView):

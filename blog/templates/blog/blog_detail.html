@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Blog Detail</title>
-</head>
-<body>
-    {{ blog_detail.content }}
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>{{ blog_detail.content }}</h3>
+    <div class="container">
+        <h4>Created on : {{ blog_detail.created_at }}</h4>
+    </div>
+    <div class="container">
+        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>{{ blog_detail.upvote_count }}
+        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>{{ blog_detail.downvote_count }}
+    </div>
+{% endblock %}
