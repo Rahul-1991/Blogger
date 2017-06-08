@@ -38,6 +38,9 @@ class Blog(TrackingField):
         self.save()
 
     def post_downvote(self):
-        self.downvote_count = self.downvote_count + 1
+        self.downvote_count = self.downvote_count - 1
         self.save()
+
+    def __str__(self):
+        return self.content
 

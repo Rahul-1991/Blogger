@@ -9,4 +9,7 @@
         <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>{{ blog_detail.upvote_count }}
         <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>{{ blog_detail.downvote_count }}
     </div>
+    <div>
+        <button type="button" class="btn btn-danger delete-blog" data-blog-id="{{ blog_detail.pk }}">Delete</button>
+    </div>
 {% endblock %}
