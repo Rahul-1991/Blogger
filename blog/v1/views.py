@@ -3,13 +3,17 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 from .models import Blog
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
+from .forms import BlogForm
 
 
 class BlogListView(ListView):
 
     model = Blog
     template_name = 'blog/blog_list.html'
+
+    def get_queryset(self):
+        return Blog.objects.all().order_by('-upvote_count')
 
 
 class BlogDetailView(DetailView):
@@ -22,14 +26,14 @@ class BlogDetailView(DetailView):
 class BlogCreateView(CreateView):
 
     model = Blog
-    fields = ('content',)
+    form_class = BlogForm
     template_name = 'blog/blog_form.html'
 
 
 class BlogUpdateView(UpdateView):
 
     model = Blog
-    fields = ('content',)
+    form_class = BlogForm
 
 
 class BlogDeleteView(DeleteView):

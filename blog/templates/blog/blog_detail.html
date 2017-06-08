@@ -10,6 +10,11 @@
         <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>{{ blog_detail.downvote_count }}
     </div>
     <div>
-        <button type="button" class="btn btn-danger delete-blog" data-blog-id="{{ blog_detail.pk }}">Delete</button>
+        <a class="btn btn-primary update" href="{% url 'update-blog' pk=blog_detail.pk %}">
+            <span class="glyphicon glyphicon-pencil"></span>
+        </a>
+        <a class="btn btn-danger delete" href="{% url 'delete-blog' pk=blog_detail.pk %}">
+            <span class="glyphicon glyphicon-remove"></span>
+        </a>
     </div>
 {% endblock %}
