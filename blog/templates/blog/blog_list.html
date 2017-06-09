@@ -3,20 +3,20 @@
 {% block content %}
 <h2>Popular Blogs</h2>
 <ul>
-    {% for blog in blog_list %}
+    {% for pk, details in context.items %}
         <div class="container element">
             <li>
                 <div class="container">
-                    <a class="blog-content" href="{% url 'detail-blog' pk=blog.pk %}">{{ blog.content }}</a>
+                    <a class="blog-content" href="{% url 'detail-blog' pk=pk %}">{{ details.content }}</a>
                 </div>
                 <div class="container">
-                    <button type="button" class="btn btn-default upvote" data-blog-id="{{ blog.pk }}">
-                      <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>{{ blog.upvote_count }}
+                    <button type="button" class="btn btn-default upvote" data-blog-id="{{ pk }}">
+                      <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>{{ details.upvote_count }}
                     </button>
                     <button type="button" class="btn btn-default downvote" data-blog-id="{{ blog.pk }}">
-                      <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>{{ blog.downvote_count }}
+                      <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>{{ details.downvote_count }}
                     </button>
-                    {{ blog.get_time_difference }}
+                    {{ details.get_time_difference }}
                 </div>
             </li>
         </div>

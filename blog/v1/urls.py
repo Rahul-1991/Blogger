@@ -7,6 +7,6 @@ urlpatterns = [
     url(r'create/$', views.BlogCreateView.as_view(), name='create-blog'),
     url(r'update/(?P<pk>\d+)/$', views.BlogUpdateView.as_view(), name='update-blog'),
     url(r'delete/(?P<pk>\d+)/$', views.BlogDeleteView.as_view(), name='delete-blog'),
-    url(r'upvote/(?P<pk>\d+)/$', views.post_upvote, name='post-upvote'),
-    url(r'downvote/(?P<pk>\d+)/$', views.post_downvote, name='post-downvote'),
+    # url(r'upvote/(?P<pk>\d+)/$', views.post_upvote, name='post-upvote'),
+    # url(r'downvote/(?P<pk>\d+)/$', views.post_downvote, name='post-downvote'),
 ]

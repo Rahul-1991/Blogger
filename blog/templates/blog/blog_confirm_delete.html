@@ -6,11 +6,11 @@
         Are you sure to delete the below post ? <br>
     </h5>
     <h3>
-        {{ blog.content }}
+        {{ context.content.0 }}
     </h3>
-    <form method="post">
+    <form action="{% url 'delete-blog' pk=context.pk %}" method="post">
         {% csrf_token %}
         <input type="submit" class="btn btn-danger" value="Delete">
-        <a class="btn btn-primary" href="{% url 'detail-blog' pk=blog.pk %}">Cancel</a>
+        <a class="btn btn-primary" href="{% url 'list-blogs' %}">Cancel</a>
     </form>
 {% endblock %}

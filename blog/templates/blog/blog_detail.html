@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h3>{{ blog_detail.content }}</h3>
+    <h3>{{ context.content }}</h3>
     <div class="container">
-        <h4>Created on : {{ blog_detail.created_at }}</h4>
+        <h4>Created on : {{ context.created_at }}</h4>
     </div>
     <div class="container">
-        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>{{ blog_detail.upvote_count }}
-        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>{{ blog_detail.downvote_count }}
+        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>{{ context.upvote_count }}
+        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>{{ context.downvote_count }}
     </div>
     <div>
-        <a class="btn btn-primary update" href="{% url 'update-blog' pk=blog_detail.pk %}">
+        <a class="btn btn-primary update" href="{% url 'update-blog' pk=context.pk %}">
             <span class="glyphicon glyphicon-pencil"></span>
         </a>
-        <a class="btn btn-danger delete" href="{% url 'delete-blog' pk=blog_detail.pk %}">
+        <a class="btn btn-danger delete" href="{% url 'delete-blog' pk=context.pk %}">
             <span class="glyphicon glyphicon-remove"></span>
         </a>
     </div>
