@@ -19,6 +19,6 @@ from blog.v1.views import BlogListView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^blog/', include('blog.v1.urls')),
+    url(r'^blog/', include('blog.urls')),
     url(r'^$', BlogListView.as_view(), name='dashboard')
 ]
