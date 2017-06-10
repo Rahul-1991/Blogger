@@ -17,6 +17,10 @@ class BlogDataStructure(object):
     def __init__(self):
         self.blog_dict = dict()
 
+    @staticmethod
+    def _current_time():
+        return datetime.now()
+
     def get_primary_key(self):
         if self.blog_dict:
             return max(self.blog_dict.keys()) + 1
@@ -25,12 +29,18 @@ class BlogDataStructure(object):
 
     def create(self, data):
         pk = self.get_primary_key()
-        time_now = datetime.now().strftime("%Y-%m-%d")
-        data.update({'created_at': time_now, 'pk': pk})
+        data.update({
+            'created_at': self._current_time(),
+            'updated_at': self._current_time(),
+            'pk': pk,
+            'upvote_count': 0,
+            'downvote_count': 0,
+        })
         self.blog_dict[pk] = data
 
     def update(self, pk, data):
-        self.blog_dict.update({pk: data})
+        data.update({'updated_at': self._current_time()})
+        self.blog_dict[pk].update(data)
 
     def delete(self, pk):
         del self.blog_dict[pk]

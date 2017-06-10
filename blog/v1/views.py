@@ -1,12 +1,11 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import View, DeleteView
+from django.views.generic import View
 from django.shortcuts import render
 from .models import BlogDataStructure
-from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import get_object_or_404
-# from .forms import BlogForm
+from blog.decorators import process_params
+from blog.utils import get_published_time_diff
 
 
 class BlogListView(View):
@@ -15,6 +14,9 @@ class BlogListView(View):
     template_name = 'blog/blog_list.html'
 
     def get(self, request, *args, **kwargs):
+        for key, value in self.context.iteritems():
+            published_time_diff = get_published_time_diff(value.get('updated_at'))
+            value.update({'published_time_diff': published_time_diff})
         return render(request, self.template_name, {'context': self.context})
 
 
@@ -23,9 +25,9 @@ class BlogCreateView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'blog/blog_form.html', {'context': {'create': True}})
 
+    @process_params()
     def post(self, request, *args, **kwargs):
-        response = dict(request.POST)
-        response.pop('csrfmiddlewaretoken')
+        response = kwargs.get('params')
         BlogDataStructure().create(response)
         return HttpResponseRedirect(reverse('list-blogs'))
 
@@ -45,15 +47,15 @@ class BlogUpdateView(View):
     template_name = 'blog/blog_form.html'
 
     def get(self, request, *args, **kwargs):
-        pk = int(self.kwargs.get('pk'))
+        pk = int(kwargs.get('pk'))
         data = BlogDataStructure().read(pk)
         data.update({'create': False})
         return render(request, 'blog/blog_form.html', {'context': data})
 
+    @process_params()
     def post(self, request, *args, **kwargs):
         pk = int(self.kwargs.get('pk'))
-        response = dict(request.POST)
-        response.pop('csrfmiddlewaretoken')
+        response = kwargs.get('params')
         BlogDataStructure().update(pk, response)
         return HttpResponseRedirect(reverse('list-blogs'))
 
@@ -72,50 +74,21 @@ class BlogDeleteView(View):
         return render(request, 'blog/blog_list.html', {'context': context})
 
 
-# class BlogListView(ListView):
-#
-#     model = Blog
-#     template_name = 'blog/blog_list.html'
-#
-#     def get_queryset(self):
-#         return Blog.objects.all().order_by('-upvote_count')
+@csrf_exempt
+def post_upvote(request, pk):
+    data = BlogDataStructure().read(int(pk))
+    data.update({
+        'upvote_count': data.get('upvote_count', 0) + 1
+    })
+    BlogDataStructure().update(int(pk), data)
+    return JsonResponse({'success': True})
 
 
-# class BlogDetailView(DetailView):
-#
-#     model = Blog
-#     template_name = 'blog/blog_detail.html'
-#     context_object_name = 'blog_detail'
-#
-#
-# class BlogCreateView(CreateView):
-#
-#     model = Blog
-#     form_class = BlogForm
-#     template_name = 'blog/blog_form.html'
-#
-#
-# class BlogUpdateView(UpdateView):
-#
-#     model = Blog
-#     form_class = BlogForm
-#
-#
-# class BlogDeleteView(DeleteView):
-#
-#     model = Blog
-#     success_url = reverse_lazy('list-blogs')
-#
-#
-# @csrf_exempt
-# def post_upvote(request, pk):
-#     post = get_object_or_404(Blog, pk=pk)
-#     post.post_upvote()
-#     return JsonResponse({'success': True})
-#
-#
-# @csrf_exempt
-# def post_downvote(request, pk):
-#     post = get_object_or_404(Blog, pk=pk)
-#     post.post_downvote()
-#     return JsonResponse({'success': True})
+@csrf_exempt
+def post_downvote(request, pk):
+    data = BlogDataStructure().read(int(pk))
+    data.update({
+        'downvote_count': data.get('downvote_count', 0) + 1
+    })
+    BlogDataStructure().update(int(pk), data)
+    return JsonResponse({'success': True})

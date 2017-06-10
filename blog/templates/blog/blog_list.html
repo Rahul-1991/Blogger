@@ -13,10 +13,10 @@
                     <button type="button" class="btn btn-default upvote" data-blog-id="{{ pk }}">
                       <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>{{ details.upvote_count }}
                     </button>
-                    <button type="button" class="btn btn-default downvote" data-blog-id="{{ blog.pk }}">
+                    <button type="button" class="btn btn-default downvote" data-blog-id="{{ pk }}">
                       <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>{{ details.downvote_count }}
                     </button>
-                    {{ details.get_time_difference }}
+                    {{ details.published_time_diff }}
                 </div>
             </li>
         </div>
