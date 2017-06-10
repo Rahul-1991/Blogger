@@ -10,14 +10,14 @@ from blog.utils import get_published_time_diff
 
 class BlogListView(View):
 
-    context = BlogDataStructure().get_list()
     template_name = 'blog/blog_list.html'
 
     def get(self, request, *args, **kwargs):
-        for key, value in self.context.iteritems():
+        context = BlogDataStructure().get_list()
+        for key, value in context.iteritems():
             published_time_diff = get_published_time_diff(value.get('updated_at'))
             value.update({'published_time_diff': published_time_diff})
-        return render(request, self.template_name, {'context': self.context})
+        return render(request, self.template_name, {'context': context})
 
 
 class BlogCreateView(View):

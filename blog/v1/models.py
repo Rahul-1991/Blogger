@@ -1,4 +1,5 @@
 from datetime import datetime
+from collections import OrderedDict
 
 
 class Singleton(type):
@@ -48,5 +49,16 @@ class BlogDataStructure(object):
     def read(self, pk):
         return self.blog_dict[pk]
 
+    def get_sorted_keys(self):
+        return sorted(self.blog_dict.keys(),
+                             key=lambda x: self.blog_dict.get(x, {}).get('upvote_count', 0), reverse=True)[:20]
+
+    def get_sorted_dict(self, sorted_keys):
+        sorted_dict = OrderedDict()
+        for key in sorted_keys:
+            sorted_dict[key] = self.blog_dict.get(key)
+        return sorted_dict
+
     def get_list(self):
-        return self.blog_dict
+        sorted_keys = self.get_sorted_keys()
+        return self.get_sorted_dict(sorted_keys)
