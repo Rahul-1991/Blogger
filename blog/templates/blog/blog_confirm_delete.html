@@ -6,7 +6,7 @@
         Are you sure to delete the below post ? <br>
     </h5>
     <h3>
-        {{ context.content.0 }}
+        {{ context.content }}
     </h3>
     <form action="{% url 'delete-blog' pk=context.pk %}" method="post">
         {% csrf_token %}
