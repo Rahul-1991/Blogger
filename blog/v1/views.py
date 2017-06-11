@@ -8,15 +8,22 @@ from blog.decorators import process_params
 from blog.utils import get_published_time_diff
 
 
+# Used Class Based View
+
 class BlogListView(View):
 
     template_name = 'blog/blog_list.html'
 
     def get(self, request, *args, **kwargs):
+
+        # get list of posts from Data structure
         context = BlogDataStructure().get_list()
+
+        # updated the time diff it was last updated
         for key, value in context.iteritems():
             published_time_diff = get_published_time_diff(value.get('updated_at'))
             value.update({'published_time_diff': published_time_diff})
+
         return render(request, self.template_name, {'context': context})
 
 
@@ -37,7 +44,7 @@ class BlogDetailView(View):
     template_name = 'blog/blog_detail.html'
 
     def get(self, request, *args, **kwargs):
-        pk = int(self.kwargs.get('pk'))      # check for non integer pk
+        pk = int(self.kwargs.get('pk'))
         data = BlogDataStructure().read(pk)
         return render(request, self.template_name, {'context': data})
 
